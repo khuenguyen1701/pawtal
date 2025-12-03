@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+:root{
+    --color-primary: #f8c800;
+    --color-primary-accent: #ffea8f ; 
+
+    --color-secondary: black;
+
+    --color-background: #ffea8f;
+
+    --text-light: white;
+    --text-yellow: #f8c800;
+    --text-dark: black;
+
+    --font-san: 'Instrument Sans', sans-serif;
+    --font-serif: 'Instrument Serif', serif;
+}
