@@ -1,7 +1,6 @@
 <template>
   <div class="landing-wrapper">
 
-    <!-- HERO BANNER -->
     <div class="hero-banner">
       <div class="hero-date-picker">
         <h3 class="hero-label">Select a date</h3>
@@ -13,7 +12,6 @@
       </div>
     </div>
 
-    <!-- TABS -->
     <div class="tabs-container">
       <button class="tab-button" @click="activeTab = 'featured'">Featured Event</button>
       <button class="tab-button" @click="activeTab = 'today'">Today's Event</button>
@@ -22,12 +20,10 @@
       <button class="tab-button" @click="activeTab = 'places'">Places</button>
     </div>
 
-    <!-- PAGE TITLE -->
     <h2 class="page-title">
       {{ titleForTab }}
     </h2>
 
-    <!-- EVENT LIST -->
     <div class="eventlist-wrapper">
       <EventList
         :selectedDate="selectedDate"
@@ -61,16 +57,14 @@ const titleForTab = computed(() => {
 </script>
 
 <style scoped>
-/* ------------ WRAPPER ------------ */
 .landing-wrapper {
   width: 100%;
   min-height: 100vh;
 }
 
-/* ------------ HERO BANNER ------------ */
 .hero-banner {
   width: screen;
-  height: 12rem; /* 48 Tailwind */
+  height: 12rem;
   background: #d1d1d1;
   display: flex;
   align-items: center;
@@ -93,7 +87,6 @@ const titleForTab = computed(() => {
   border-radius: 6px;
 }
 
-/* ------------ TABS ------------ */
 .tabs-container {
   background: #fff7cc;
   display: flex;
@@ -116,17 +109,15 @@ const titleForTab = computed(() => {
   text-decoration: underline;
 }
 
-/* ------------ PAGE TITLE ------------ */
 .page-title {
   text-align: center;
   font-family: var(--font-serif);
-  font-size: 1.875rem; /* text-3xl */
+  font-size: 1.875rem;
   font-weight: 700;
-  margin: 1.5rem 0; /* my-6 */
+  margin: 1.5rem 0;
 }
 
-/* ------------ EVENT LIST WRAPPER ------------ */
 .eventlist-wrapper {
-  padding: 1rem 8rem 5rem; /* px-6 pb-20 */
+  padding: 1rem 8rem 5rem;
 }
 </style>
