@@ -16,3 +16,11 @@
     --font-san: 'Instrument Sans', sans-serif;
     --font-serif: 'Instrument Serif', serif;
 }
+
+body{
+    font-family: var(--font-san);
+}
+
+h1{
+    font-family: var(--font-serif);
+}

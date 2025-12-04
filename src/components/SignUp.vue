@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background-color: #061857; 
+  background-color: var(--color-secondary); 
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -49,7 +49,7 @@ export default {
 }
 
 .card {
-  background: #f7f3ee;
+  background: var(--color-primary-accent);
   width: 420px;
   padding: 40px 50px;
   border-radius: 20px;
@@ -72,7 +72,7 @@ export default {
 }
 
 .highlight {
-  color: #f4c542;
+  color: var(--color-primary);
 }
 
 .form {
@@ -85,19 +85,19 @@ export default {
 label {
   font-size: 14px;
   font-weight: 700;
-  color: #061857;
+  color: var(--color-secondary);
 }
 
 input {
   padding: 12px;
   border-radius: 10px;
-  border: 2px solid #061857;
+  border: 2px solid var(--color-secondary);
   font-size: 16px;
   outline: none;
 }
 
 .login-btn {
-  background: #061857;
+  background: var(--color-secondary);
   color: white;
   padding: 12px;
   margin-top: 20px;
@@ -109,7 +109,7 @@ input {
 }
 
 .login-btn:hover {
-  background: #0b1f80;
+  background: var(--color-secondary);
 }
 
 .signup-text {
@@ -117,11 +117,11 @@ input {
   font-size: 14px;
   font-weight: 600;
   text-align: center;
-  color: #061857;
+  color: var(--primary);
 }
 
 .signup-text a {
-  color: #061857;
+  color: var(--color-secondary);
   font-weight: 700;
   text-decoration: underline;
 }
