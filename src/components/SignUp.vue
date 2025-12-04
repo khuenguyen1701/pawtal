@@ -21,7 +21,7 @@
             <button class="login-btn">CREATE ACCOUNT</button>
 
             <p class="signup-text">
-                Already have an account? <a href="/login">Log in</a>
+                <!-- Already have an account? <a href="/login">Log in</a> -->
             </p>
             <p class="signup-text">
                 <a href="/home">Go back</a>

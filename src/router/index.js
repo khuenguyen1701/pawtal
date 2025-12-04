@@ -1,20 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../components/Home.vue'
-import Login from '../components/Login.vue'
-import SignUp from '../components/SignUp.vue'
 
+import Home from '../components/LandingPage.vue'
+// import Login from '../components/Login.vue'
+// import SignUp from '../components/SignUp.vue'
+import EventPage from '../components/EventPage.vue'
 
 const routes = [
-  // swap signup to come after home later
-  { path: '/', redirect: '/signup' },
-  { path: '/', name: 'Home', component: Home},
-  { path: '/login', name: 'Login', component: Login},
-  { path: '/signup', name: 'SignUp', component: SignUp},
+  { path: '/', redirect: '/home' },
+
+  { path: '/home', name: 'Home', component: Home },
+
+  // { path: '/login', name: 'Login', component: Login },
+  // { path: '/signup', name: 'SignUp', component: SignUp },
+
+  {
+    path: '/events/:id',
+    name: 'EventPage',
+    component: EventPage,
+    props: true,
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routes,
+  routes,
 })
 
 export default router
