@@ -41,74 +41,75 @@
 <style scoped>
 .footer {
   background-color: var(--color-secondary);
-  padding:  40px 50px;
-  width: screen;
+  padding: 3rem 8rem 1rem; /* smaller height */
+  height: wrap; /* <-- THIS sets it to 10% of viewport height */
   color: var(--text-light);
+  display: flex;
+  align-items: center; /* vertically center */
 }
 
 .footer-content {
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
-  gap: 40px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
+
+/* ---------- CONTACT SECTION (COMPACT MODE) ---------- */
 
 .contact-section {
   width: 55%;
 }
 
 .footer-title {
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 50px;
+  font-size: 18px;       /* smaller */
+  font-weight: 700;
+  margin-bottom: 6px;    /* much smaller */
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 6px;    /* reduced */
 }
 
 label {
-  display: block;
-  font-size: 18px;
-  font-weight: 700;
-  padding-bottom: 15px;
+  font-size: 12px;
+  padding-bottom: 4px;
 }
 
-.input-box {
+.input-box,
+.text-area {
   width: 100%;
-  padding: 12px;
+  padding: 6px;          /* smaller size */
+  height: 24px;          /* shrink */
   background: white;
-  border: 3px dashed var(--color-primary);
-  border-radius: 8px;
+  border: 2px dashed var(--color-primary);
+  border-radius: 6px;
 }
 
 .text-area {
-  width: 100%;
-  height: 120px;
-  background: white;
-  border: 3px dashed var(--color-primary);
-  border-radius: 8px;
-  padding: 12px;
+  height: 40px;          /* shrink the note box */
   resize: none;
 }
 
+/* ---------- SOCIAL SECTION ---------- */
+
 .social-section {
   flex: 1;
-  text-align: center;
-  align-items: center;
+  text-align: right;
 }
 
 .social-icons {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
 }
 
 .icon-box {
-  width: 60px;
-  height: 60px;
+  width: 32px;
+  height: 32px;
   background: var(--color-primary-accent);
-  border-radius: 8px;
+  border-radius: 6px;
 }
+
 </style>

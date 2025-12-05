@@ -7,7 +7,7 @@
 
     --color-secondary: black;
 
-    --color-background: #ffea8f;
+    --color-background: #FFF7D4;
 
     --text-light: white;
     --text-yellow: #f8c800;
@@ -15,6 +15,12 @@
 
     --font-san: 'Instrument Sans', sans-serif;
     --font-serif: 'Instrument Serif', serif;
+}
+
+html body {
+    width: 100% !important;
+    margin: 0 auto;
+    padding: 0;
 }
 
 body{

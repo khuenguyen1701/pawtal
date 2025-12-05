@@ -1,91 +1,319 @@
 <template>
-  <div class="min-h-screen bg-[#f7f3e3] text-gray-900">
-    <!-- Breadcrumb -->
-    <div class="px-8 pt-6 text-sm text-gray-700">
-      <span class="font-semibold">DePauw University ></span>
-      <span class="font-semibold"> Thursday, November 28 ></span>
-      <div class="text-xs mt-1">
-        Exhibit NOW in IMES E25–310, from May 23 onward! Stop by to visit and learn more!
+  <div class="eventpage-wrapper">
+    <div class="event-bg"></div>
+
+    <div class="event-content">
+      <div class="breadcrumb">
+        <router-link to="/home" class="breadcrumb-link">
+          DePauw University
+        </router-link>
+
+        <span class="breadcrumb-separator"> ></span>
+
+        <router-link to="/home" class="breadcrumb-link">
+          Events
+        </router-link>
+
+        <span class="breadcrumb-separator"> ></span>
+
+        <span class="breadcrumb-current">
+          {{ event?.date }}
+        </span>
+
+        <div class="breadcrumb-sub">
+          Exhibit NOW in {{ event?.location }}, from May 23 onward! Stop by to visit and learn more!
+        </div>
       </div>
-    </div>
 
-    <!-- Main Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 px-8 py-10">
+      <div class="eventpage-layout">
+        <div class="event-sidebar">
 
-      <!-- LEFT CARD -->
-      <div class="bg-white rounded-xl shadow p-4">
-        <!-- Event Poster -->
-        <img
-          src="/images/event-poster.png"
-          alt="Event Poster"
-          class="rounded-lg mb-4"
-        />
+          <div class="image-wrapper">
+            <img
+              :src="event?.image"
+              alt="Event Poster"
+              class="event-image"
+              @load="imageLoaded = true"
+              v-show="imageLoaded"
+            />
 
-        <div class="text-sm mb-4">
-          <div class="flex items-center gap-2 font-medium mb-1">
-            <i class="fa-regular fa-calendar"></i>
-            Thursday, Nov 28
+            <div v-show="!imageLoaded" class="image-skeleton"></div>
           </div>
 
-          <p class="text-gray-700">Open for Everyone</p>
-          <p class="text-gray-700">Free Entrance</p>
-        </div>
+          <div class="event-meta">
+           <div class="event-header-row">
+            <div class="event-meta-date">
+              <i class="fa-regular fa-calendar"></i>
+              {{ event?.date }}
+            </div>
 
-        <!-- Buttons -->
-        <button
-          class="w-full bg-yellow-500 text-black px-4 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition"
-        >
-          I'm Interested
-        </button>
+            <button class="bookmark-button">
+              <i class="fa-regular fa-bookmark"></i>
+            </button>
+          </div>
 
-        <div class="flex justify-end mt-2">
-          <button class="p-2 rounded-lg hover:bg-gray-100 transition">
-            <i class="fa-regular fa-bookmark text-xl"></i>
+
+
+            <p>Department: {{ event?.group }}</p>
+            <p>Building: {{ event?.place }}</p>
+          </div>
+
+          <button class="interest-button">
+            <i class="fa-solid fa-star button-icon"></i>
+            I'm Interested
           </button>
+
         </div>
-      </div>
 
-      <!-- RIGHT CONTENT -->
-      <div>
-        <p class="uppercase tracking-wide text-sm text-gray-700">Exhibition</p>
+        <div class="event-content">
+          <p class="event-type">Exhibition</p>
 
-        <h1 class="text-3xl font-bold mt-1">
-          Paradigm Shift in Infectious Diseases
-        </h1>
+          <h1 class="event-title">{{ event?.title }}</h1>
 
-        <p class="mt-2 text-gray-700">
-          Sponsor by
-          <a class="text-blue-600 underline" href="#">XYZ at DePauw University</a>
-        </p>
+          <p class="event-host">
+            Hosted by
+            <span>{{ event?.group }}</span>
+          </p>
 
-        <!-- Event Details -->
-        <h2 class="text-2xl font-serif font-semibold mt-8">Event Details:</h2>
+          <h2 class="event-details-label">Event Details:</h2>
 
-        <p class="mt-4 leading-relaxed text-gray-800">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin diam libero,
-          pharetra ut placerat quis, porttitor vel elit. Integer tempus risus pulvinar,
-          ultricies lectus finibus, tristique lorem. Donec ac ullamcorper sem. Nulla ac
-          nisi porta, commodo mauris eu, sagittis quam. Aliquam eros nisl, ultrices quis
-          blandit in, facilisis vitae turpis. Sed sagittis hendrerit dui, sit amet euismod
-          mauris. Suspendisse potenti. Nullam tempor ex at massa convallis, sed feugiat
-          eros ullamcorper. Curabitur erat dolor, pellentesque in ornare placerat, dictum
-          vitae lacus. Phasellus mollis sem nibh, blandit consectetur risus dapibus cursus.
-          Nam consequat vulputate venenatis. Mauris pulvinar, est et congue lacinia, nisl
-          eros pharetra elit, ac fringilla dolor ante sit amet nulla. Maecenas et turpis
-          quis mauris scelerisque imperdiet. Praesent posuere mauris feugiat gravida
-          mollis.
-        </p>
+          <p class="event-description">
+            {{ event?.longDescription }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "EventPage",
-};
+<script setup lang="ts">
+import { useRoute } from "vue-router";
+import { events, type EventItem } from "@/data/Events";
+import { ref } from "vue";
+
+const imageLoaded = ref(false);
+const route = useRoute();
+const event: EventItem | undefined = events.find(e => e.id === route.params.id);
 </script>
 
 <style scoped>
+.eventpage-wrapper {
+  position: relative;
+  background: var(--color-background);
+  min-height: 100vh;
+  z-index: 0;
+}
 
+.event-bg {
+  position: absolute;
+  top: 95px;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background: var(--color-primary);
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.event-content {
+  position: relative;
+  z-index: 2;
+}
+
+.breadcrumb {
+  padding: 24px 32px 0 32px;
+  font-size: 14px;
+  color: #4a4a4a;
+}
+.breadcrumb-link {
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.breadcrumb-link:hover {
+  opacity: 0.6;
+}
+
+.breadcrumb-separator {
+  margin: 0 4px;
+}
+
+.breadcrumb-current {
+  font-weight: 600;
+  color: #333;
+}
+
+
+.breadcrumb-sub {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.eventpage-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 40px 8rem;
+  gap: 32px;
+}
+
+@media (min-width: 1024px) {
+  .eventpage-layout {
+    grid-template-columns: 300px 1fr;
+  }
+}
+
+.event-sidebar {
+  background: white;
+  padding: 16px;
+  margin-top: 50px;
+  box-shadow: 0 5px 10px rgb(0 0 0 / 12%);
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.event-image {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.image-skeleton {
+  width: 100%;
+  height: 220px;
+  background: #e0e0e0;
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.image-skeleton::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #e0e0e0 0%, #f5f5f5 50%, #e0e0e0 100%);
+}
+
+.event-meta {
+  font-size: 14px;
+  margin-bottom: 16px;
+  color: #333;
+}
+.event-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.event-meta-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.bookmark-button {
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.bookmark-button:hover {
+  background: #eee;
+}
+
+
+.interest-button {
+  width: 100%;
+  padding: 12px 0;
+  background: var(--color-primary);
+  color: black;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.interest-button:hover {
+  background: var(--color-primary-accent);
+  transform: translateY(-2px);
+}
+
+.button-icon {
+  font-size: 16px;
+}
+
+.bookmark-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.bookmark-button {
+  padding: 6px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.bookmark-button:hover {
+  background: #eee;
+}
+
+.event-type {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.event-title {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.event-host {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.event-host span {
+  font-weight: 600;
+}
+
+.event-details-label {
+  margin-top: 32px;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.event-description {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
 </style>
