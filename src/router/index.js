@@ -6,6 +6,8 @@ import SignUp from '../components/SignUp.vue'
 import EventPage from '../components/EventPage.vue'
 import ManagePage from '../components/ManagePage.vue'
 import CreateEvent from '../components/CreateEvent.vue'
+import CreateEvent from '../components/CreateEvent.vue'
+import ManagePage from '../components/ManagePage.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
@@ -45,6 +47,16 @@ const routes = [
     name: 'CreateEvent',
     component: CreateEvent,
   }
+  // { path: '/managepage', 
+  //   name: 'ManagePage', 
+  //   component: ManagePage 
+  // },
+  // {
+  //   path: '/events/:id',
+  //   name: 'EventPage',
+  //   component: EventPage,
+  //   props: true,
+  // },
 ]
 
 const router = createRouter({
