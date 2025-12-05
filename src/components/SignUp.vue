@@ -6,17 +6,17 @@
         <h1 class="title">SIGN UP</h1>
     </div>
 
-    <!-- login card -->
+    <!-- signup card -->
     <div class="card">
-        <form class="form">
-            <label>USERNAME</label>
-            <input type="text"/>    
+        <form class="form" @submit.prevent="handleSignUp">
+            <label>EMAIL</label>
+            <input type="email" v-model="email" required/>    
 
             <label>PASSWORD</label>
-            <input type="password"/>
+            <input type="password" v-model="password" required/>
 
             <label>CONFIRM PASSWORD</label>
-            <input type="password" />
+            <input type="password" v-model="confirmPassword" required/>
 
             <button class="login-btn">CREATE ACCOUNT</button>
 
@@ -31,11 +31,39 @@
     </div>
 </template>
 
-<script>
-export default {
-  name: "SignUp",
-};
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { auth } from '../firebase'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+
+const email = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const errorMessage = ref('')
+const router = useRouter()
+
+const handleSignUp = async () => {
+  errorMessage.value = ''
+
+  // check password
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = "Passwords do not match"
+    return
+  }
+
+  try {
+    // create account in Firebase
+    await createUserWithEmailAndPassword(auth, email.value, password.value)
+
+    // redirect home/login
+    router.push('/')
+  } catch (err) {
+    errorMessage.value = err.message
+  }
+}
 </script>
+
 
 <style scoped>
 .login-container {
