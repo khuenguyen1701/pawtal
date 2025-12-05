@@ -89,11 +89,19 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { events, type EventItem } from "@/data/Events";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { db } from "@/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 const imageLoaded = ref(false);
 const route = useRoute();
-const event: EventItem | undefined = events.find(e => e.id === route.params.id);
+const event = ref(null);
+
+onMounted(async () => {
+  const docRef = doc(db, "events", route.params.id as string);
+  const snapshot = await getDoc(docRef);
+  event.value = snapshot.data();
+});
 </script>
 
 <style scoped>
