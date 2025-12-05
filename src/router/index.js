@@ -7,19 +7,19 @@ import EventPage from '../components/EventPage.vue'
 import ManagePage from '../components/ManagePage.vue'
 
 const routes = [
-  { path: '/', redirect: '/managepage' },
+  { path: '/', redirect: '/signup' },
 
   // { path: '/home', name: 'Home', component: Home },
 
   // { path: '/login', name: 'Login', component: Login },
-  // { path: '/signup', 
-  //   name: 'SignUp', 
-  //   component: SignUp 
-  // },
-  { path: '/managepage', 
-    name: 'ManagePage', 
-    component: ManagePage 
+  { path: '/signup', 
+    name: 'SignUp', 
+    component: SignUp 
   },
+  // { path: '/managepage', 
+  //   name: 'ManagePage', 
+  //   component: ManagePage 
+  // },
   // {
   //   path: '/events/:id',
   //   name: 'EventPage',
