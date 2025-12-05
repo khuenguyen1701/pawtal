@@ -1,32 +1,38 @@
 <template>
     <div class="login-container">
-    <!-- titles -->
-    <div class="titles">
-        <h1 class="title">PAWTAL</h1>
-        <h1 class="title">SIGN UP</h1>
-    </div>
+    
+    <div class="signup-wrapper">
+      <!-- TITLES -->
+      <div class="titles">
+          <h1 class="title">PAWTAL</h1>
+          <h1 class="title">SIGN UP</h1>
+      </div>
 
-    <!-- signup card -->
-    <div class="card">
-        <form class="form" @submit.prevent="handleSignUp">
-            <label>EMAIL</label>
-            <input type="email" v-model="email" required/>    
+      <!-- SIGN-UP CARD -->
+      <div class="card">
+          <form class="form" @submit.prevent="handleSignUp">
+              <label class="label">EMAIL</label>
+              <input type="email" v-model="email" required/>    
 
-            <label>PASSWORD</label>
-            <input type="password" v-model="password" required/>
+              <label class="label">PASSWORD</label>
+              <input type="password" v-model="password" required/>
 
-            <label>CONFIRM PASSWORD</label>
-            <input type="password" v-model="confirmPassword" required/>
+              <label class="label">CONFIRM PASSWORD</label>
+              <input type="password" v-model="confirmPassword" required/>
 
-            <button class="login-btn">CREATE ACCOUNT</button>
+              <button class="login-btn">CREATE ACCOUNT</button>
+              
+              <!-- ERROR CATCH BlOCK -->
+              <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-            <p class="signup-text">
-                <!-- Already have an account? <a href="/login">Log in</a> -->
-            </p>
-            <p class="signup-text">
-                <a href="/home">Go back</a>
-            </p>
-        </form>
+              <p class="signup-text">
+                  <!-- Already have an account? <a href="/login">Log in</a> -->
+              </p>
+              <p class="signup-text">
+                  <a href="/home">Go back</a>
+              </p>
+          </form>
+      </div>
     </div>
     </div>
 </template>
@@ -43,7 +49,10 @@ const confirmPassword = ref('')
 const errorMessage = ref('')
 const router = useRouter()
 
+// SIGN-UP HANDLE
 const handleSignUp = async () => {
+  console.log("Attempting signup with:", email.value, password.value)
+
   errorMessage.value = ''
 
   // check password
@@ -59,9 +68,21 @@ const handleSignUp = async () => {
     // redirect home/login
     router.push('/')
   } catch (err) {
-    errorMessage.value = err.message
+    const code = err.code;
+
+    const messages = {
+      "auth/email-already-in-use": "This email is already registered. Try logging in!",
+      "auth/ invalid-email": "Please enter a valid email address.",
+      "auth/ weak-password": "Password must be at least 6 characters.",
+      "auth/ missing-password": "Please enter a password.",
+      "auth/ network-request-failed": "Network error. Please try again.",
+      "auth/operation-not-allowed": "Email/password sign-in is disabled in Firebase."
+    };
+
+    errorMessage.value = messages[code] || "Something went wrong. Please try again.";
   }
 }
+
 </script>
 
 
@@ -73,6 +94,13 @@ const handleSignUp = async () => {
   display: flex;
   flex-direction: column;      
   justify-content: center;
+  align-items: center;
+}
+
+.signup-wrapper {
+  width: 420px;
+  display: flex; 
+  flex-direction: column;
   align-items: center;
 }
 
@@ -88,15 +116,19 @@ const handleSignUp = async () => {
     width: 420px;
     display: flex;
     justify-content:space-between;
-    margin-bottom: 20px; 
+    margin-bottom: -20px;
 }
 
 .title {
   font-size: 40px;
-  margin-bottom: 5px;
   font-weight: 800;
   color: white;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+  font-family: 'Instrument Sans', sans-serif;
+}
+
+.label {
+  font-family: 'Instrument Sans', sans-serif;
 }
 
 .highlight {
@@ -152,5 +184,12 @@ input {
   color: var(--color-secondary);
   font-weight: 700;
   text-decoration: underline;
+}
+
+.error-message {
+  color: black;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 </style>
