@@ -27,8 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { events } from "@/data/Events";
+import { ref, onMounted, computed } from "vue";
+import { db } from "@/firebase.js";
+import { collection, onSnapshot } from "firebase/firestore";
 
 interface Props {
   selectedDate?: string | null;
@@ -38,8 +39,22 @@ interface Props {
 
 const props = defineProps<Props>();
 
+// Store events loaded from Firebase
+const eventList = ref<any[]>([]);
+
+// Fetch Firestore events in real time
+onMounted(() => {
+  onSnapshot(collection(db, "events"), (snapshot) => {
+    eventList.value = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  });
+});
+
+// Filtering based on dropdowns
 const filteredEvents = computed(() =>
-  events.filter(event => {
+  eventList.value.filter(event => {
     const matchDate = props.selectedDate
       ? event.dateISO === props.selectedDate
       : true;
@@ -56,6 +71,7 @@ const filteredEvents = computed(() =>
   })
 );
 </script>
+
 
 <style scoped>
 .event-grid {
