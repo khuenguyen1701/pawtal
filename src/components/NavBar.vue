@@ -1,20 +1,20 @@
 <template>
   <nav class="navbar">
     <div class="nav-left">
-      <!-- Logo -->
       <h1 class="logo">PAWTAL</h1>
 
-      <!-- Search Bar -->
       <div class="search-bar">
-        <span class="search-icon">🔍</span>
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
         <input type="text" placeholder="Search" />
       </div>
     </div>
 
     <div class="nav-right">
       <router-link to="/home" class="nav-link">Home</router-link>
-      <router-link to="/myevent" class="nav-link">My Event</router-link>
-      <router-link to="/login" class="nav-link">Login/Signup</router-link>
+      <router-link to="/myevent" class="nav-link">Saved Event</router-link>
+      <router-link to="/login" class="nav-link login-link">
+        <i class="fa-regular fa-user"></i>
+      </router-link>
     </div>
   </nav>
 </template>
@@ -25,13 +25,14 @@
 <style scoped>
 .navbar {
   width: 100%;
-  height: 90px;
-  background-color: #000000;
+  height: 60px;
+  background-color: var(--color-secondary);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
   box-sizing: border-box;
+  font-family: var(--font-san);
 }
 
 .nav-left {
@@ -40,23 +41,22 @@
   gap: 50px;
 }
 
-/* Logo */
 .logo {
-  color: #f4d764;
-  font-size: 40px;
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  font-size: 35px;
   font-weight: 800;
   letter-spacing: 2px;
   margin: 0;
 }
 
-/* Search Bar */
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: #f4d764;
-  padding: 10px 14px;
-  border-radius: 4px;
-  width: 250px;
+  background-color: var(--color-primary-accent);
+  padding: 5px 10px;
+  border-radius: 2px;
+  width: 100%;
 }
 
 .search-bar input {
@@ -64,14 +64,18 @@
   background: transparent;
   outline: none;
   font-size: 16px;
+  color: var(--text-dark);
   margin-left: 10px;
+  width: 100%;
+  font-family: var(--font-san);
 }
 
 .search-icon {
   font-size: 18px;
+  color: var(--text-dark);
 }
 
-/* RIGHT NAV LINKS */
+/* RIGHT LINKS */
 .nav-right {
   display: flex;
   align-items: center;
@@ -79,13 +83,21 @@
 }
 
 .nav-link {
-  color: #e8e8e8;
-  font-size: 22px;
+  color: var(--text-light);
+  font-size: 20px;
   text-decoration: none;
+  font-weight: 600;
   transition: 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .nav-link:hover {
-  color: #f4d764;
+  color: var(--color-primary);
+}
+
+.login-link i {
+  font-size: 18px;
 }
 </style>

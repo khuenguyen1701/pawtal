@@ -10,7 +10,7 @@ import ManagePage from '../components/ManagePage.vue'
 const routes = [
   { path: '/', redirect: '/signup' },
 
-  // { path: '/home', name: 'Home', component: Home },
+  { path: '/home', name: 'Home', component: Home },
 
   // { path: '/login', name: 'Login', component: Login },
   { path: '/signup', 
@@ -21,17 +21,17 @@ const routes = [
     path: '/org/create-event',
     name: 'CreateEvent',
     component: CreateEvent,
-  }
+  },
   // { path: '/managepage', 
   //   name: 'ManagePage', 
   //   component: ManagePage 
   // },
-  // {
-  //   path: '/events/:id',
-  //   name: 'EventPage',
-  //   component: EventPage,
-  //   props: true,
-  // },
+  {
+    path: '/events/:id',
+    name: 'EventPage',
+    component: EventPage,
+    props: true,
+  },
 ]
 
 const router = createRouter({

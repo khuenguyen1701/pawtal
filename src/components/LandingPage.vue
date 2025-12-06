@@ -11,8 +11,11 @@
         />
       </div>
     </div>
+
     <div class="demo-create-event">
-      <router-link :to="`/org/create-event`" class="event-link">Create Event</router-link>
+      <router-link to="/org/create-event" class="event-link">
+        Create Event
+      </router-link>
     </div>
 
     <div class="tabs-container">
@@ -23,12 +26,11 @@
       <button class="tab-button" @click="activeTab = 'places'">Places</button>
     </div>
 
-    <h2 class="page-title">
-      {{ titleForTab }}
-    </h2>
+    <h2 class="page-title">{{ titleForTab }}</h2>
 
     <div class="eventlist-wrapper">
       <EventList
+        :events="events"
         :selectedDate="selectedDate"
         :selectedGroup="selectedGroup"
         :selectedPlace="selectedPlace"
@@ -39,13 +41,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import EventList from "@/components/EventList.vue";
+import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
+import { db } from "@/firebase";
+import type { EventItem } from "@/type/Events";
 
+// FILTERS
 const selectedDate = ref<string | null>(null);
 const selectedGroup = ref<string | null>(null);
 const selectedPlace = ref<string | null>(null);
 
+// EVENT DATA from Firestore
+const events = ref<EventItem[]>([]);
+
+// LIVE FIRESTORE LISTENER
+onMounted(() => {
+  const q = query(collection(db, "events"), orderBy("createdAt", "desc"));
+
+  onSnapshot(q, (snapshot) => {
+    events.value = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as EventItem[];
+  });
+});
+
+// TABS
 const activeTab = ref("today");
 
 const titleForTab = computed(() => {
@@ -61,7 +83,7 @@ const titleForTab = computed(() => {
 
 <style scoped>
 .landing-wrapper {
-  width: 100%;
+  width: screen;
   min-height: 100vh;
 }
 
@@ -90,6 +112,21 @@ const titleForTab = computed(() => {
   border-radius: 6px;
 }
 
+.demo-create-event {
+  padding: 12px 40px;
+}
+
+.event-link {
+  font-size: 18px;
+  text-decoration: none;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.event-link:hover {
+  text-decoration: underline;
+}
+
 .tabs-container {
   background: #fff7cc;
   display: flex;
@@ -103,9 +140,9 @@ const titleForTab = computed(() => {
 .tab-button {
   background: transparent;
   border: none;
+  cursor: pointer;
   font-size: inherit;
   font-weight: inherit;
-  cursor: pointer;
 }
 
 .tab-button:hover {

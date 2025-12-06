@@ -42,7 +42,6 @@ const props = defineProps<Props>();
 // Store events loaded from Firebase
 const eventList = ref<any[]>([]);
 
-// Fetch Firestore events in real time
 onMounted(() => {
   onSnapshot(collection(db, "events"), (snapshot) => {
     eventList.value = snapshot.docs.map(doc => ({
@@ -52,7 +51,6 @@ onMounted(() => {
   });
 });
 
-// Filtering based on dropdowns
 const filteredEvents = computed(() =>
   eventList.value.filter(event => {
     const matchDate = props.selectedDate

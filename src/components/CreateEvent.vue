@@ -53,16 +53,14 @@
           <div class="form-group full-width">
             <label>Poster Image</label>
             <input type="file" @change="handlePosterUpload" class="input-field" />
-            </div>
-
+          </div>
 
         </div>
 
-        <<div class="form-actions">
-            <button type="button" class="cancel-btn">Cancel</button>
-            <button type="button" class="create-btn" @click="createEvent">Create Event</button>
+        <div class="form-actions">
+          <button type="button" class="cancel-btn">Cancel</button>
+          <button type="button" class="create-btn" @click="createEvent">Create Event</button>
         </div>
-
 
       </form>
 
@@ -72,18 +70,32 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { db, storage } from "@/firebase.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import { ref } from "vue";
+import { places } from "@/data/Places";
+import {departments} from "@/data/Departments";
+// FORM STATE
+const title = ref("");
+const shortDescription = ref("");
+const longDescription = ref("");
+
+const date = ref("");
+const time = ref("");
+
+const location = ref("");
+const group = ref("");
 
 const posterFile = ref<File | null>(null);
 
+// IMAGE UPLOAD HANDLER
 const handlePosterUpload = (e: Event) => {
   const target = e.target as HTMLInputElement;
   posterFile.value = target.files?.[0] || null;
 };
 
+// CREATE EVENT
 const createEvent = async () => {
   let imageURL = "";
 
@@ -111,7 +123,6 @@ const createEvent = async () => {
   alert("Event created!");
 };
 </script>
-
 
 <style scoped>
 .create-wrapper {
@@ -142,7 +153,7 @@ const createEvent = async () => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 50px;
-  row-gap: 25px
+  row-gap: 25px;
 }
 
 .full-width {
@@ -166,7 +177,6 @@ const createEvent = async () => {
   font-family: var(--font-san);
   box-sizing: border-box;
 }
-
 
 .textarea-field {
   height: 150px;
