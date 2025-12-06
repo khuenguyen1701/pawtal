@@ -44,10 +44,8 @@ import { ref, computed } from "vue"
 import { organizers } from "../data/Organizers"
 import { useRouter } from "vue-router"
 
-// 🔥🔥🔥 REQUIRED IMPORTS (You were missing these)
 import { auth, db } from "../firebase.js"
 import { doc, setDoc } from "firebase/firestore"
-// 🔥🔥🔥 Without these, submit will NEVER work.
 
 const router = useRouter()
 

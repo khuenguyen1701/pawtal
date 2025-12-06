@@ -19,7 +19,6 @@
         </div>
       </div>
 
-      <!-- Loading state -->
       <div v-else class="loading-message">Loading event…</div>
 
       <div v-if="event" class="eventpage-layout">
