@@ -11,18 +11,55 @@
 
     <div class="nav-right">
       <router-link to="/home" class="nav-link">Home</router-link>
-      <router-link to="/myevent" class="nav-link">Saved Event</router-link>
-      <router-link to="/login" class="nav-link login-link">
-        <i class="fa-regular fa-user"></i>
+      <router-link to="/myevent" class="nav-link">My Event</router-link>
+
+      <!-- If NOT logged in -->
+      <router-link v-if="!currentUser" to="/login" class="nav-link">
+        Login/Signup
       </router-link>
+
+      <!-- If logged in -->
+      <template v-else>
+        <span class="nav-link welcome">Welcome, {{ displayName }}</span>
+        <button class="logout-btn" @click="logout">Logout</button>
+      </template>
     </div>
   </nav>
 </template>
 
 <script setup>
+import { computed } from "vue"
+import { useRouter } from "vue-router"
+import { currentUser, auth } from "../firebase.js"
+import { signOut } from "firebase/auth"
+
+// Router
+const router = useRouter()
+
+// show displayName or email prefix
+const displayName = computed(() => {
+  if (!currentUser.value) return ""
+  return (
+    currentUser.value.displayName ||
+    currentUser.value.email.split("@")[0]
+  )
+})
+
+// LOGOUT function
+const logout = async () => {
+  try {
+    console.log("Logging out...")
+    await signOut(auth)
+    console.log("Logout successful")
+    router.push("/home")  // redirect after logout
+  } catch (err) {
+    console.error("Logout error:", err)
+  }
+}
 </script>
 
 <style scoped>
+/* existing styles */
 .navbar {
   width: 100%;
   height: 60px;
@@ -99,5 +136,22 @@
 
 .login-link i {
   font-size: 18px;
+}
+
+/* Logout button */
+.logout-btn {
+  background: transparent;
+  border: 2px solid #f4d764;
+  color: #f4d764;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #f4d764;
+  color: #000;
 }
 </style>
