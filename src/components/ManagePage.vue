@@ -81,7 +81,7 @@
     </section>
 
    
-    <button class="create-event-btn" @click="$router.push('/org/create-event')">
+    <button class="create-event-btn" @click="$router.push('/create-event')">
     Create Event
     </button>
 

@@ -4,14 +4,14 @@
       <h1 class="logo">PAWTAL</h1>
 
       <div class="search-bar">
-        <span class="search-icon">🔍</span>
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
         <input type="text" placeholder="Search" />
       </div>
     </div>
 
     <div class="nav-right">
       <router-link to="/home" class="nav-link">Home</router-link>
-      <router-link to="/myevent" class="nav-link">My Event</router-link>
+      <router-link to="/events" class="nav-link">All Events</router-link>
 
         <router-link
         v-if="currentUserRole === 'faculty'"
@@ -22,7 +22,7 @@
         </router-link>
 
       <router-link v-if="!currentUser" to="/login" class="nav-link">
-        Login/Signup
+        Log In
       </router-link>
 
       <template v-else>
@@ -64,13 +64,14 @@ const logout = async () => {
 <style scoped>
 .navbar {
   width: 100%;
-  height: 90px;
-  background-color: #000000;
+  height: 60px;
+  background-color: var(--color-secondary);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
   box-sizing: border-box;
+  font-family: var(--font-san);
 }
 
 .nav-left {
@@ -80,8 +81,9 @@ const logout = async () => {
 }
 
 .logo {
-  color: #f4d764;
-  font-size: 40px;
+  font-family: var(--font-serif);
+  color: var(--color-primary);
+  font-size: 35px;
   font-weight: 800;
   letter-spacing: 2px;
   margin: 0;
@@ -95,6 +97,10 @@ const logout = async () => {
   padding: 10px 14px;
   border-radius: 20px;
   width: 250px;
+  background-color: var(--color-primary-accent);
+  padding: 5px 10px;
+  border-radius: 2px;
+  width: 100%;
 }
 
 .search-bar input {
@@ -102,13 +108,18 @@ const logout = async () => {
   background: transparent;
   outline: none;
   font-size: 16px;
+  color: var(--text-dark);
   margin-left: 10px;
+  width: 100%;
+  font-family: var(--font-san);
 }
 
 .search-icon {
   font-size: 18px;
+  color: var(--text-dark);
 }
 
+/* RIGHT LINKS */
 .nav-right {
   display: flex;
   align-items: center;
@@ -116,15 +127,23 @@ const logout = async () => {
 }
 
 .nav-link {
-  color: #e8e8e8;
-  font-size: 22px;
+  color: var(--text-light);
+  font-size: 20px;
   text-decoration: none;
+  font-weight: 600;
   transition: 0.2s ease;
   font-family: 'Instrument Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .nav-link:hover {
-  color: #f4d764;
+  color: var(--color-primary);
+}
+
+.login-link i {
+  font-size: 18px;
 }
 
 .logout-btn {

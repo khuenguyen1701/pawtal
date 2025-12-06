@@ -46,23 +46,21 @@
             <label>Department / Club</label>
             <select v-model="group" class="input-field">
               <option disabled value="">Select group</option>
-              <option v-for="dept in departments" :key="dept">{{ dept }}</option>
+              <option v-for="org in organizers" :key="org">{{ org }}</option>
             </select>
           </div>
 
           <div class="form-group full-width">
             <label>Poster Image</label>
             <input type="file" @change="handlePosterUpload" class="input-field" />
-            </div>
-
+          </div>
 
         </div>
 
-        <<div class="form-actions">
-            <button type="button" class="cancel-btn">Cancel</button>
-            <button type="button" class="create-btn" @click="createEvent">Create Event</button>
+        <div class="form-actions">
+          <button type="button" class="cancel-btn">Cancel</button>
+          <button type="button" class="create-btn" @click="createEvent">Create Event</button>
         </div>
-
 
       </form>
 
@@ -72,10 +70,21 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { db, storage } from "@/firebase.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
-import { ref } from "vue";
+import { places } from "@/data/Places";
+import {organizers} from "@/data/Organizers";
+const title = ref("");
+const shortDescription = ref("");
+const longDescription = ref("");
+
+const date = ref("");
+const time = ref("");
+
+const location = ref("");
+const group = ref("");
 
 const posterFile = ref<File | null>(null);
 
@@ -107,16 +116,30 @@ const createEvent = async () => {
     createdAt: Timestamp.now()
   };
 
+  const resetForm = () => {
+    title.value = "";
+    shortDescription.value = "";
+    longDescription.value = "";
+    date.value = "";
+    time.value = "";
+    location.value = "";
+    group.value = "";
+
+    posterFile.value = null;
+  };
+
+
   await addDoc(collection(db, "events"), eventData);
   alert("Event created!");
+  resetForm();
 };
 </script>
-
 
 <style scoped>
 .create-wrapper {
   width: screen;
   padding: 2rem 8rem;
+  background: var(--color-primary-accent);
 }
 
 .page-title {
@@ -142,7 +165,7 @@ const createEvent = async () => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 50px;
-  row-gap: 25px
+  row-gap: 25px;
 }
 
 .full-width {
@@ -166,7 +189,6 @@ const createEvent = async () => {
   font-family: var(--font-san);
   box-sizing: border-box;
 }
-
 
 .textarea-field {
   height: 150px;

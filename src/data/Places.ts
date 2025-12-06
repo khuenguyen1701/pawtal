@@ -1,8 +1,9 @@
 export const places = [
+  "Asbury",
   "GCPA",
   "Julian",
-  "Asbury",
-  "Peeler",
   "Olin",
+  "Peeler",
+  "Puliam",
   "Hoover",
 ];

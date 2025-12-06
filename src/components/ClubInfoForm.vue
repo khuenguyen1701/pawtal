@@ -6,8 +6,8 @@
       <label class="label">DEPARTMENT</label>
       <select v-model="selectedDept" class="dropdown">
         <option disabled value="">-- Choose a Department --</option>
-        <option v-for="dept in departments" :key="dept">
-          {{ dept }}
+       <option v-for="org in organizers" :key="org">
+        {{ org }}
         </option>
       </select>
 
@@ -41,7 +41,7 @@
 
 <script setup>
 import { ref, computed } from "vue"
-import { departments } from "../data/Departments"
+import { organizers } from "../data/Organizers"
 import { useRouter } from "vue-router"
 
 // 🔥🔥🔥 REQUIRED IMPORTS (You were missing these)

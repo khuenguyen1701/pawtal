@@ -9,6 +9,8 @@ import ManagePage from '../components/ManagePage.vue'
 import CreateEvent from '../components/CreateEvent.vue'
 import RoleSelection from '../components/RoleSelection.vue'
 import ClubInfoForm from '../components/ClubInfoForm.vue'
+import EventList from '@/components/EventList.vue'
+import { compile } from 'vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
@@ -46,9 +48,14 @@ const routes = [
     component: EventPage,
     props: true,
   },
-  
   {
-    path: '/org/create-event',
+    path: '/events',
+    name: 'EventList',
+    component: EventList,
+    props: true,
+  },
+  {
+    path: '/create-event',
     name: 'CreateEvent',
     component: CreateEvent,
   },
@@ -57,6 +64,10 @@ const routes = [
   name: 'ClubInfoForm',
   component: ClubInfoForm,
   }
+  // { path: '/managepage', 
+  //   name: 'ManagePage', 
+  //   component: ManagePage 
+  // },
 ]
 
 const router = createRouter({
