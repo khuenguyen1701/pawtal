@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import {ref} from "vue";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -29,8 +29,17 @@ export const storage = getStorage(app);
 export const auth = getAuth(app)
 
 export const currentUser = ref(null)
-onAuthStateChanged(auth, (user) => {
+export const currentUserRole = ref(null);
+
+onAuthStateChanged(auth, async (user) => {
   currentUser.value = user; 
+
+  if (user) {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    currentUserRole.value = snap.exists() ? snap.data().role : null;
+  } else {
+    currentUserRole.value = null;
+  }
 });
 
 console.log("API KEY:", import.meta.env.VITE_FIREBASE_API_KEY)
