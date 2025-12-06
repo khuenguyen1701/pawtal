@@ -2,13 +2,12 @@
   <div class="login-container">
 
     <div class="signup-wrapper">
-      <!-- TITLES -->
+     
       <div class="titles">
           <h1 class="title">PAWTAL</h1>
           <h1 class="title">LOG IN</h1>
       </div>
 
-      <!-- LOGIN CARD -->
       <div class="card">
           <form class="form" @submit.prevent="handleLogin">
 
@@ -20,7 +19,7 @@
 
               <button class="login-btn">LOG IN</button>
 
-              <!-- ERROR DISPLAY -->
+             
               <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
               <p class="signup-text">
@@ -54,8 +53,6 @@ const handleLogin = async () => {
 
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value)
-
-    // redirect to homepage or dashboard
     router.push('/home')
   } catch (err) {
     const code = err.code
@@ -76,13 +73,11 @@ const handleLogin = async () => {
       return
     }
 
-    // Wrong password 
     if (code === 'auth/wrong-password') {
       errorMessage.value = "Incorrect password. Try again."
       return
     }
 
-    // Invalid email format
     if (code === 'auth/invalid-email') {
       errorMessage.value = "Please enter a valid email address."
       return
@@ -94,7 +89,6 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
-/* EXACT same styling as SignUp.vue */
 
 .login-container {
   background-color: var(--color-secondary); 

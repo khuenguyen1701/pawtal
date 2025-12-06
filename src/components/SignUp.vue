@@ -2,13 +2,12 @@
     <div class="login-container">
     
     <div class="signup-wrapper">
-      <!-- TITLES -->
+
       <div class="titles">
           <h1 class="title">PAWTAL</h1>
           <h1 class="title">SIGN UP</h1>
       </div>
 
-      <!-- SIGN-UP CARD -->
       <div class="card">
           <form class="form" @submit.prevent="handleSignUp">
               <label class="label">EMAIL</label>
@@ -22,7 +21,6 @@
 
               <button class="login-btn">CREATE ACCOUNT</button>
               
-              <!-- ERROR CATCH BlOCK -->
               <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
               <p class="signup-text">
@@ -49,27 +47,23 @@ const confirmPassword = ref('')
 const errorMessage = ref('')
 const router = useRouter()
 
-// SIGN-UP HANDLE
 const handleSignUp = async () => {
   console.log("Attempting signup with:", email.value, password.value)
 
   errorMessage.value = ''
 
-  // check password
   if (password.value !== confirmPassword.value) {
     errorMessage.value = "Passwords do not match"
     return
   }
 
   try {
-    // create account in Firebase
     await createUserWithEmailAndPassword(auth, email.value, password.value)
 
-    router.push('/home')
+    router.push('/choose-role')
   } catch (err) {
     const code = err.code;
 
-    //account exists, redirect to login
     if (code === "auth/email-already-in-use") {
       errorMessage.value = "This email is already registered. Redirecting to login..."
 

@@ -13,12 +13,18 @@
       <router-link to="/home" class="nav-link">Home</router-link>
       <router-link to="/events" class="nav-link">All Events</router-link>
 
-      <!-- If NOT logged in -->
+        <router-link
+        v-if="currentUserRole === 'faculty'"
+        to="/managepage"
+        class="nav-link"
+        >
+        Manage
+        </router-link>
+
       <router-link v-if="!currentUser" to="/login" class="nav-link">
         Log In
       </router-link>
 
-      <!-- If logged in -->
       <template v-else>
         <span class="nav-link welcome">Welcome, {{ displayName }}</span>
         <button class="logout-btn" @click="logout">Logout</button>
@@ -30,13 +36,11 @@
 <script setup>
 import { computed } from "vue"
 import { useRouter } from "vue-router"
-import { currentUser, auth } from "../firebase.js"
+import { currentUser, currentUserRole, auth } from "../firebase.js"
 import { signOut } from "firebase/auth"
 
-// Router
 const router = useRouter()
 
-// show displayName or email prefix
 const displayName = computed(() => {
   if (!currentUser.value) return ""
   return (
@@ -45,13 +49,12 @@ const displayName = computed(() => {
   )
 })
 
-// LOGOUT function
 const logout = async () => {
   try {
     console.log("Logging out...")
     await signOut(auth)
     console.log("Logout successful")
-    router.push("/home")  // redirect after logout
+    router.push("/home") 
   } catch (err) {
     console.error("Logout error:", err)
   }
@@ -59,7 +62,6 @@ const logout = async () => {
 </script>
 
 <style scoped>
-/* existing styles */
 .navbar {
   width: 100%;
   height: 60px;
@@ -85,6 +87,7 @@ const logout = async () => {
   font-weight: 800;
   letter-spacing: 2px;
   margin: 0;
+  font-family: 'Instrument Sans', sans-serif;
 }
 
 .search-bar {
@@ -94,6 +97,10 @@ const logout = async () => {
   padding: 5px 10px;
   border-radius: 2px;
   width: 100%;
+  background-color: white;
+  padding: 10px 14px;
+  border-radius: 20px;
+  width: 250px;
 }
 
 .search-bar input {
@@ -128,6 +135,7 @@ const logout = async () => {
   display: flex;
   align-items: center;
   gap: 6px;
+  font-family: 'Instrument Sans', sans-serif;
 }
 
 .nav-link:hover {
@@ -138,7 +146,6 @@ const logout = async () => {
   font-size: 18px;
 }
 
-/* Logout button */
 .logout-btn {
   background: transparent;
   border: 2px solid #f4d764;
