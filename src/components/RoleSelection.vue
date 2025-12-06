@@ -3,37 +3,49 @@
     <div class="role-card">
       <h1 class="title">CHOOSE YOUR ROLE</h1>
 
-      <div class="roles">
-        <button class="role-btn" @click="chooseRole('student')">
+      <div class="roles" v-if="!message">
+        <button class="role-btn" @click="selectRole('student')">
           STUDENT
         </button>
 
-        <button class="role-btn" @click="chooseRole('faculty')">
-          FACULTY<br />ORGANIZATION
+        <button class="role-btn" @click="selectRole('faculty')">
+          FACULTY / ORG
         </button>
       </div>
+
+      <p v-if="message" class="success-msg">{{ message }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { auth, db } from "../firebase.js";
-import { doc, setDoc } from "firebase/firestore";
-import { useRouter } from "vue-router";
+import { ref } from "vue"
+import { auth, db } from "../firebase.js"
+import { doc, setDoc } from "firebase/firestore"
+import { useRouter } from "vue-router"
+import { currentUserRole } from "../firebase.js"
 
-const router = useRouter();
+const router = useRouter()
+const message = ref("")
 
-const chooseRole = async (role) => {
-  const user = auth.currentUser;
-  if (!user) return;
+const selectRole = async (role) => {
+  const user = auth.currentUser
+  if (!user) return
 
-  // Save role in Firestore
-  await setDoc(doc(db, "users", user.uid), { role });
+  await setDoc(doc(db, "users", user.uid), { role })
+  currentUserRole.value = role
 
-  // Redirect based on role
-  if (role === "student") router.push("/home");
-  else router.push("/managepage");
-};
+  message.value = `Successfully signed up as ${role.toUpperCase()} — redirecting...`
+
+  setTimeout(() => {
+    if (role === "student") {
+      router.push("/home")
+    } else if (role === "faculty") {
+      router.push("/org/info")
+    }
+  }, 1200)
+}
+
 </script>
 
 <style scoped>
@@ -75,9 +87,18 @@ const chooseRole = async (role) => {
   color: white;
   cursor: pointer;
   border: none;
+  transition: 0.25s ease;
 }
 
 .role-btn:hover {
   transform: scale(1.05);
+  background: #222;
+}
+
+.success-msg {
+  margin-top: 30px;
+  font-size: 20px;
+  color: green;
+  font-weight: bold;
 }
 </style>

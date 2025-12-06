@@ -41,11 +41,11 @@
 <style scoped>
 .footer {
   background-color: var(--color-secondary);
-  padding: 3rem 8rem 1rem; /* smaller height */
-  height: wrap; /* <-- THIS sets it to 10% of viewport height */
+  padding: 3rem 8rem 1rem; 
+  height: wrap; 
   color: var(--text-light);
   display: flex;
-  align-items: center; /* vertically center */
+  align-items: center; 
 }
 
 .footer-content {
@@ -55,20 +55,18 @@
   width: 100%;
 }
 
-/* ---------- CONTACT SECTION (COMPACT MODE) ---------- */
-
 .contact-section {
   width: 55%;
 }
 
 .footer-title {
-  font-size: 18px;       /* smaller */
+  font-size: 18px;      
   font-weight: 700;
-  margin-bottom: 6px;    /* much smaller */
+  margin-bottom: 6px;    
 }
 
 .form-group {
-  margin-bottom: 6px;    /* reduced */
+  margin-bottom: 6px;   
 }
 
 label {
@@ -79,19 +77,17 @@ label {
 .input-box,
 .text-area {
   width: 100%;
-  padding: 6px;          /* smaller size */
-  height: 24px;          /* shrink */
+  padding: 6px;          
+  height: 24px;          
   background: white;
   border: 2px dashed var(--color-primary);
   border-radius: 6px;
 }
 
 .text-area {
-  height: 40px;          /* shrink the note box */
+  height: 40px;          
   resize: none;
 }
-
-/* ---------- SOCIAL SECTION ---------- */
 
 .social-section {
   flex: 1;
