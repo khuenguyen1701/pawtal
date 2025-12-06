@@ -18,19 +18,8 @@
       </router-link>
     </div>
 
-    <div class="tabs-container">
-      <button class="tab-button" @click="activeTab = 'featured'">Featured Event</button>
-      <button class="tab-button" @click="activeTab = 'today'">Today's Event</button>
-      <button class="tab-button" @click="activeTab = 'byDate'">Events By Date</button>
-      <button class="tab-button" @click="activeTab = 'groups'">Groups</button>
-      <button class="tab-button" @click="activeTab = 'places'">Places</button>
-    </div>
-
-    <h2 class="page-title">{{ titleForTab }}</h2>
-
     <div class="eventlist-wrapper">
       <EventList
-        :events="events"
         :selectedDate="selectedDate"
         :selectedGroup="selectedGroup"
         :selectedPlace="selectedPlace"
@@ -47,15 +36,11 @@ import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "@/firebase";
 import type { EventItem } from "@/type/Events";
 
-// FILTERS
 const selectedDate = ref<string | null>(null);
 const selectedGroup = ref<string | null>(null);
 const selectedPlace = ref<string | null>(null);
-
-// EVENT DATA from Firestore
 const events = ref<EventItem[]>([]);
 
-// LIVE FIRESTORE LISTENER
 onMounted(() => {
   const q = query(collection(db, "events"), orderBy("createdAt", "desc"));
 
@@ -65,19 +50,6 @@ onMounted(() => {
       ...doc.data()
     })) as EventItem[];
   });
-});
-
-// TABS
-const activeTab = ref("today");
-
-const titleForTab = computed(() => {
-  switch (activeTab.value) {
-    case "featured": return "Featured Event";
-    case "byDate": return "Events By Date";
-    case "groups": return "Events by Group";
-    case "places": return "Events by Place";
-    default: return "Today's Event";
-  }
 });
 </script>
 
@@ -89,7 +61,7 @@ const titleForTab = computed(() => {
 
 .hero-banner {
   width: screen;
-  height: 12rem;
+  height: 15rem;
   background: #d1d1d1;
   display: flex;
   align-items: center;
@@ -113,7 +85,7 @@ const titleForTab = computed(() => {
 }
 
 .demo-create-event {
-  padding: 12px 40px;
+  padding: 2px 40px;
 }
 
 .event-link {
@@ -127,28 +99,6 @@ const titleForTab = computed(() => {
   text-decoration: underline;
 }
 
-.tabs-container {
-  background: #fff7cc;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 1.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-}
-
-.tab-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-.tab-button:hover {
-  text-decoration: underline;
-}
-
 .page-title {
   text-align: center;
   font-family: var(--font-serif);
@@ -158,6 +108,6 @@ const titleForTab = computed(() => {
 }
 
 .eventlist-wrapper {
-  padding: 1rem 8rem 5rem;
+  padding: 1rem 0rem;
 }
 </style>

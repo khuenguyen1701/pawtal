@@ -4,18 +4,18 @@
 
     <div class="event-content-wrapper">
       <div class="breadcrumb" v-if="event">
-        <router-link to="/home" class="breadcrumb-link">DePauw University</router-link>
+        <router-link to="/home" class="breadcrumb-link">Home</router-link>
 
         <span class="breadcrumb-separator"> ></span>
 
-        <router-link to="/home" class="breadcrumb-link">Events</router-link>
+        <router-link to="/events" class="breadcrumb-link">Events</router-link>
 
         <span class="breadcrumb-separator"> ></span>
 
         <span class="breadcrumb-current">{{ event.date }}</span>
 
         <div class="breadcrumb-sub">
-          Exhibit NOW in {{ event.place }}, from {{ event.date }} onward!
+          {{event.title}} in {{ event.place }}, at {{ event.time }}!
         </div>
       </div>
 
@@ -49,8 +49,8 @@
               </button>
             </div>
 
-            <p>Department: {{ event.group }}</p>
-            <p>Building: {{ event.place }}</p>
+            <p><b>Department:</b> {{ event.group }}</p>
+            <p><b>Building:</b> {{ event.place }}</p>
           </div>
 
           <button class="interest-button">
@@ -60,8 +60,6 @@
         </div>
 
         <div class="event-main">
-          <p class="event-type">Exhibition</p>
-
           <h1 class="event-title">{{ event.title }}</h1>
 
           <p class="event-host">
@@ -167,6 +165,9 @@ onMounted(async () => {
 
 .event-sidebar {
   background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   padding: 16px;
   margin-top: 30px;
   box-shadow: 0 5px 10px rgb(0 0 0 / 12%);
@@ -191,22 +192,6 @@ onMounted(async () => {
   position: relative;
 }
 
-.image-skeleton::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #e0e0e0 0%, #f5f5f5 50%, #e0e0e0 100%);
-  animation: shimmer 1.2s infinite;
-}
-
-@keyframes shimmer {
-  100% {
-    left: 100%;
-  }
-}
 
 .event-meta {
   font-size: 14px;
@@ -254,15 +239,11 @@ onMounted(async () => {
   z-index: 3;
 }
 
-.event-type {
-  text-transform: uppercase;
-  font-size: 14px;
-}
-
 .event-title {
   font-family: var(--font-serif);
   font-size: 40px;
   font-weight: 700;
+  margin-bottom:20px;
 }
 
 .event-host span {
@@ -271,7 +252,7 @@ onMounted(async () => {
 
 .event-details-label {
   font-family: var(--font-serif);
-  margin-top: 32px;
+  margin-top: 45px;
   font-size: 24px;
   font-weight: 600;
 }

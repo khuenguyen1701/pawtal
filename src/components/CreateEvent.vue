@@ -76,7 +76,6 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { places } from "@/data/Places";
 import {departments} from "@/data/Departments";
-// FORM STATE
 const title = ref("");
 const shortDescription = ref("");
 const longDescription = ref("");
@@ -89,13 +88,11 @@ const group = ref("");
 
 const posterFile = ref<File | null>(null);
 
-// IMAGE UPLOAD HANDLER
 const handlePosterUpload = (e: Event) => {
   const target = e.target as HTMLInputElement;
   posterFile.value = target.files?.[0] || null;
 };
 
-// CREATE EVENT
 const createEvent = async () => {
   let imageURL = "";
 
@@ -119,8 +116,22 @@ const createEvent = async () => {
     createdAt: Timestamp.now()
   };
 
+  const resetForm = () => {
+    title.value = "";
+    shortDescription.value = "";
+    longDescription.value = "";
+    date.value = "";
+    time.value = "";
+    location.value = "";
+    group.value = "";
+
+    posterFile.value = null;
+  };
+
+
   await addDoc(collection(db, "events"), eventData);
   alert("Event created!");
+  resetForm();
 };
 </script>
 

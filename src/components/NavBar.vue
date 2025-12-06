@@ -11,7 +11,7 @@
 
     <div class="nav-right">
       <router-link to="/home" class="nav-link">Home</router-link>
-      <router-link to="/myevent" class="nav-link">My Event</router-link>
+      <router-link to="/events" class="nav-link">All Events</router-link>
 
       <!-- If NOT logged in -->
       <router-link v-if="!currentUser" to="/login" class="nav-link">
