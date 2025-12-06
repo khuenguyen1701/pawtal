@@ -12,12 +12,6 @@
       </div>
     </div>
 
-    <div class="demo-create-event">
-      <router-link to="/create-event" class="event-link">
-        Create Event
-      </router-link>
-    </div>
-
     <div class="eventlist-wrapper">
       <EventList
         :selectedDate="selectedDate"
