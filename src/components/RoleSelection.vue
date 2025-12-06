@@ -13,7 +13,6 @@
         </button>
       </div>
 
-      <!-- SUCCESS MESSAGE -->
       <p v-if="message" class="success-msg">{{ message }}</p>
     </div>
   </div>
@@ -33,20 +32,20 @@ const selectRole = async (role) => {
   const user = auth.currentUser
   if (!user) return
 
-  // Save role in Firestore
   await setDoc(doc(db, "users", user.uid), { role })
-
   currentUserRole.value = role
 
-  // Show success message with redirect notice
   message.value = `Successfully signed up as ${role.toUpperCase()} — redirecting...`
 
-  // Redirect after delay
   setTimeout(() => {
-  router.push("/home")
-  }, 1500)
-
+    if (role === "student") {
+      router.push("/home")
+    } else if (role === "faculty") {
+      router.push("/org/info")
+    }
+  }, 1200)
 }
+
 </script>
 
 <style scoped>

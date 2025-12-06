@@ -8,6 +8,7 @@ import EventPage from '../components/EventPage.vue'
 import ManagePage from '../components/ManagePage.vue'
 import CreateEvent from '../components/CreateEvent.vue'
 import RoleSelection from '../components/RoleSelection.vue'
+import ClubInfoForm from '../components/ClubInfoForm.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
@@ -50,6 +51,11 @@ const routes = [
     path: '/org/create-event',
     name: 'CreateEvent',
     component: CreateEvent,
+  },
+  {
+  path: '/org/info',
+  name: 'ClubInfoForm',
+  component: ClubInfoForm,
   }
 ]
 
@@ -62,22 +68,27 @@ router.beforeEach((to, from, next) => {
   const user = currentUser.value
   const role = currentUserRole.value
 
-  // 1️⃣ Allow ChooseRole to redirect after selecting (prevents redirect block)
+  // 1️⃣ Allow ChooseRole page
   if (from.name === "ChooseRole") {
     return next()
   }
 
-  // 2️⃣ Prevent users who ALREADY HAVE a role from opening ChooseRole again
+  // 2️⃣ Allow organizer setup page
+  if (to.name === "ClubInfoForm") {
+    return next()
+  }
+
+  // 3️⃣ Prevent users with role from reopening ChooseRole
   if (role && to.name === "ChooseRole") {
     return next("/home")
   }
 
-  // 3️⃣ Force new users (no role yet) to choose a role only ONCE
+  // 4️⃣ Force role selection ONLY if user has no role yet
   if (user && !role && to.name !== "ChooseRole") {
     return next("/choose-role")
   }
 
-  // 4️⃣ Restrict ManagePage to faculty/org roles
+  // 5️⃣ Restrict ManagePage
   if (to.name === "ManagePage") {
     if (!user) return next("/login")
     if (role !== "faculty") return next("/home")
@@ -85,7 +96,5 @@ router.beforeEach((to, from, next) => {
 
   next()
 })
-
-
 
 export default router

@@ -1,27 +1,23 @@
 <template>
   <div class="org-page">
 
-    <!-- HEADER CARD: CLUB INFO -->
     <section class="club-header">
       <div class="club-avatar"></div>
 
       <div class="club-info">
-        <h2 class="club-name">[Club’s Name]</h2>
-        <p>Contact: [Phone number]</p>
-        <p>Email: [Club’s email]</p>
+        <h2 class="club-name">{{ dept }}</h2>
+        <p>Contact: {{ phone }}</p>
+        <p>Email: {{ email }}</p>
       </div>
     </section>
 
-    <!-- SECTION TITLE -->
     <div class="section-title yellow">
       Organization Shortcuts
     </div>
 
-    <!-- UPCOMING EVENTS SECTION -->
     <section class="upcoming-events">
       <h3>Upcoming Events</h3>
 
-      <!-- Top empty horizontal block (from screenshot) -->
       <div class="events-bar"></div>
 
       <div class="events-grid">
@@ -51,12 +47,10 @@
       </div>
     </section>
 
-    <!-- MANAGEMENT SECTION TITLE -->
     <div class="section-title yellow">
       Organization Management
     </div>
 
-    <!-- MANAGEMENT MAIN AREA -->
     <section class="management-section">
       <div class="side-menu">
         <button>About</button>
@@ -70,6 +64,13 @@
       </div>
 
       <div class="tasks-box">
+        <h3>INSTRUCTION</h3>
+        <ul>
+          <li>Click "Create Event"</li>
+          <li>Enter your event info</li>
+        </ul>
+      </div>
+      <div class="tasks-box">
         <h3>Upcoming Tasks</h3>
         <ul>
           <li>Dec 1: Spring Budget Opens</li>
@@ -79,10 +80,40 @@
       </div>
     </section>
 
+   
+    <button class="create-event-btn" @click="$router.push('/org/create-event')">
+    Create Event
+    </button>
+
+
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue"
+import { auth, db } from "../firebase.js"
+import { doc, getDoc } from "firebase/firestore"
+
+// These are what you display in your template
+const dept = ref("")
+const phone = ref("")
+const email = ref("")
+
+onMounted(async () => {
+  const user = auth.currentUser
+  if (!user) return
+  
+  // Load the user data from Firestore
+  const userRef = doc(db, "users", user.uid)
+  const snap = await getDoc(userRef)
+
+  if (snap.exists()) {
+    const data = snap.data()
+    dept.value = data.department
+    phone.value = data.phone
+    email.value = data.email
+  }
+})
 </script>
 
 <style scoped>
@@ -92,7 +123,6 @@
   padding-bottom: 60px;
 }
 
-/* CLUB HEADER */
 .club-header {
   display: flex;
   align-items: center;
@@ -163,7 +193,6 @@
   color: #555;
 }
 
-/* MANAGEMENT SECTION */
 .management-section {
   display: flex;
   padding: 30px;
@@ -204,4 +233,23 @@
   margin-bottom: 12px;
   font-size: 16px;
 }
+
+.create-event-btn {
+  display: block;
+  margin: 40px auto;
+  background: #f4d764;
+  color: #000;
+  border: none;
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  width: fit-content;
+}
+.create-event-btn:hover {
+  background: #e5c352;
+}
+
 </style>

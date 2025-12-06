@@ -13,7 +13,6 @@
       <router-link to="/home" class="nav-link">Home</router-link>
       <router-link to="/myevent" class="nav-link">My Event</router-link>
 
-      <!-- Show Manage Page ONLY for faculty/org -->
         <router-link
         v-if="currentUserRole === 'faculty'"
         to="/managepage"
@@ -22,12 +21,10 @@
         Manage
         </router-link>
 
-      <!-- If NOT logged in -->
       <router-link v-if="!currentUser" to="/login" class="nav-link">
         Login/Signup
       </router-link>
 
-      <!-- If logged in -->
       <template v-else>
         <span class="nav-link welcome">Welcome, {{ displayName }}</span>
         <button class="logout-btn" @click="logout">Logout</button>
@@ -42,11 +39,8 @@ import { useRouter } from "vue-router"
 import { currentUser, currentUserRole, auth } from "../firebase.js"
 import { signOut } from "firebase/auth"
 
-
-// Router
 const router = useRouter()
 
-// show displayName or email prefix
 const displayName = computed(() => {
   if (!currentUser.value) return ""
   return (
@@ -55,13 +49,12 @@ const displayName = computed(() => {
   )
 })
 
-// LOGOUT function
 const logout = async () => {
   try {
     console.log("Logging out...")
     await signOut(auth)
     console.log("Logout successful")
-    router.push("/home")  // redirect after logout
+    router.push("/home") 
   } catch (err) {
     console.error("Logout error:", err)
   }
@@ -69,7 +62,6 @@ const logout = async () => {
 </script>
 
 <style scoped>
-/* existing styles */
 .navbar {
   width: 100%;
   height: 90px;
@@ -93,14 +85,15 @@ const logout = async () => {
   font-weight: 800;
   letter-spacing: 2px;
   margin: 0;
+  font-family: 'Instrument Sans', sans-serif;
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  background-color: #f4d764;
+  background-color: white;
   padding: 10px 14px;
-  border-radius: 4px;
+  border-radius: 20px;
   width: 250px;
 }
 
@@ -127,13 +120,13 @@ const logout = async () => {
   font-size: 22px;
   text-decoration: none;
   transition: 0.2s ease;
+  font-family: 'Instrument Sans', sans-serif;
 }
 
 .nav-link:hover {
   color: #f4d764;
 }
 
-/* Logout button */
 .logout-btn {
   background: transparent;
   border: 2px solid #f4d764;
