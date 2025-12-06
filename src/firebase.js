@@ -1,7 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import {ref} from "vue";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +24,22 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const auth = getAuth(app)
+export const db = getFirestore(app);
+export const storage = getStorage(app);
+export const auth = getAuth(app)
 
-export { auth }
+export const currentUser = ref(null)
+export const currentUserRole = ref(null);
+
+onAuthStateChanged(auth, async (user) => {
+  currentUser.value = user; 
+
+  if (user) {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    currentUserRole.value = snap.exists() ? snap.data().role : null;
+  } else {
+    currentUserRole.value = null;
+  }
+});
+
+console.log("API KEY:", import.meta.env.VITE_FIREBASE_API_KEY)

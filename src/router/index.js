@@ -1,30 +1,60 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import Home from '../components/LandingPage.vue'
-// import Login from '../components/Login.vue'
+import Login from '../components/Login.vue'
 import SignUp from '../components/SignUp.vue'
 import EventPage from '../components/EventPage.vue'
 import ManagePage from '../components/ManagePage.vue'
+import CreateEvent from '../components/CreateEvent.vue'
+import EventList from '@/components/EventList.vue'
+import { compile } from 'vue'
 
 const routes = [
-  { path: '/', redirect: '/managepage' },
+  { path: '/', redirect: '/home' },
 
-  // { path: '/home', name: 'Home', component: Home },
+  { path: '/home', 
+    name: 'Home', 
+    component: Home, 
+    // meta: {requiresGuest: true}
+  },
 
-  // { path: '/login', name: 'Login', component: Login },
-  // { path: '/signup', 
-  //   name: 'SignUp', 
-  //   component: SignUp 
-  // },
+  { path: '/signup', 
+    name: 'SignUp', 
+    component: SignUp ,
+    // meta: {requiresGuest: true}
+  },
+
+  { path: '/login', 
+    name: 'Login', 
+    component: Login,
+    // meta: {requiresGuest: true}
+  },
   { path: '/managepage', 
     name: 'ManagePage', 
-    component: ManagePage 
+    component: ManagePage,
+    // meta: {requiresAuth: true}
   },
-  // {
-  //   path: '/events/:id',
-  //   name: 'EventPage',
-  //   component: EventPage,
-  //   props: true,
+
+  {
+    path: '/events/:id',
+    name: 'EventPage',
+    component: EventPage,
+    props: true,
+  },
+  {
+    path: '/events',
+    name: 'EventList',
+    component: EventList,
+    props: true,
+  },
+  {
+    path: '/create-event',
+    name: 'CreateEvent',
+    component: CreateEvent,
+  },
+  // { path: '/managepage', 
+  //   name: 'ManagePage', 
+  //   component: ManagePage 
   // },
 ]
 

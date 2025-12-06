@@ -20,9 +20,9 @@ const showNavbar = computed(() => !hideOn.includes(route.path))
   </div>
 </template>
 
-<style scoped>
+<style>
 .container {
-  padding-top: 4.3rem;
+  padding-top: 5rem;
   margin: 0;
 }
 </style>
