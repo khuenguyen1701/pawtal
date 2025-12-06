@@ -1,4 +1,5 @@
-export const departments = [
+// Organizers, including departments and clubs
+export const organizers = [
   "Art Department",
   "Biology Department",
   "Chemistry Department",

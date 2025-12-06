@@ -4,7 +4,7 @@
     <div class="filters">
       <MultiSelect
         v-model="selectedGroups"
-        :options="departments"
+        :options="organizers"
         label="Filter by Group"
       />
 
@@ -41,7 +41,7 @@ import { db } from "@/firebase.js";
 import { collection, onSnapshot } from "firebase/firestore";
 
 import MultiSelect from "@/components/MultiSelect.vue";
-import { departments } from "@/data/Departments";
+import {organizers } from "@/data/Organizers";
 import { places } from "@/data/Places";
 
 interface Props {
@@ -96,7 +96,7 @@ const filteredEvents = computed(() =>
 <style scoped>
 .event-list-wrapper {
   min-height: max-content;
-  padding: 2rem 8rem;
+  padding: 0rem 8rem;
   margin-bottom: 3rem;
 }
 

@@ -46,7 +46,7 @@
             <label>Department / Club</label>
             <select v-model="group" class="input-field">
               <option disabled value="">Select group</option>
-              <option v-for="dept in departments" :key="dept">{{ dept }}</option>
+              <option v-for="org in organizers" :key="org">{{ org }}</option>
             </select>
           </div>
 
@@ -75,7 +75,7 @@ import { db, storage } from "@/firebase.js";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { places } from "@/data/Places";
-import {departments} from "@/data/Departments";
+import {organizers} from "@/data/Organizers";
 const title = ref("");
 const shortDescription = ref("");
 const longDescription = ref("");
@@ -139,6 +139,7 @@ const createEvent = async () => {
 .create-wrapper {
   width: screen;
   padding: 2rem 8rem;
+  background: var(--color-primary-accent);
 }
 
 .page-title {

@@ -15,7 +15,7 @@
 
       <!-- If NOT logged in -->
       <router-link v-if="!currentUser" to="/login" class="nav-link">
-        Login/Signup
+        Log In
       </router-link>
 
       <!-- If logged in -->

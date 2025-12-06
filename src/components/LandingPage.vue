@@ -13,7 +13,7 @@
     </div>
 
     <div class="demo-create-event">
-      <router-link to="/org/create-event" class="event-link">
+      <router-link to="/create-event" class="event-link">
         Create Event
       </router-link>
     </div>
