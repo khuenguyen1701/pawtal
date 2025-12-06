@@ -65,10 +65,20 @@ const handleSignUp = async () => {
     // create account in Firebase
     await createUserWithEmailAndPassword(auth, email.value, password.value)
 
-    // redirect home/login
-    router.push('/')
+    router.push('/home')
   } catch (err) {
     const code = err.code;
+
+    //account exists, redirect to login
+    if (code === "auth/email-already-in-use") {
+      errorMessage.value = "This email is already registered. Redirecting to login..."
+
+      setTimeout(() => {
+        router.push('/login')   
+      }, 1500)
+
+      return
+    }
 
     const messages = {
       "auth/email-already-in-use": "This email is already registered. Try logging in!",

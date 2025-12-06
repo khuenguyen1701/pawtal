@@ -6,8 +6,6 @@ import SignUp from '../components/SignUp.vue'
 import EventPage from '../components/EventPage.vue'
 import ManagePage from '../components/ManagePage.vue'
 import CreateEvent from '../components/CreateEvent.vue'
-import CreateEvent from '../components/CreateEvent.vue'
-import ManagePage from '../components/ManagePage.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
