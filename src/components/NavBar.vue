@@ -87,7 +87,7 @@ const logout = async () => {
   font-weight: 800;
   letter-spacing: 2px;
   margin: 0;
-  font-family: 'Instrument Sans', sans-serif;
+  font-family: var(--font-serif);
 }
 
 .search-bar {
