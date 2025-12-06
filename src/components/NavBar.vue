@@ -13,6 +13,15 @@
       <router-link to="/home" class="nav-link">Home</router-link>
       <router-link to="/myevent" class="nav-link">My Event</router-link>
 
+      <!-- Show Manage Page ONLY for faculty/org -->
+        <router-link
+        v-if="currentUserRole === 'faculty'"
+        to="/managepage"
+        class="nav-link"
+        >
+        Manage
+        </router-link>
+
       <!-- If NOT logged in -->
       <router-link v-if="!currentUser" to="/login" class="nav-link">
         Login/Signup
@@ -30,8 +39,9 @@
 <script setup>
 import { computed } from "vue"
 import { useRouter } from "vue-router"
-import { currentUser, auth } from "../firebase.js"
+import { currentUser, currentUserRole, auth } from "../firebase.js"
 import { signOut } from "firebase/auth"
+
 
 // Router
 const router = useRouter()

@@ -65,7 +65,7 @@ const handleSignUp = async () => {
     // create account in Firebase
     await createUserWithEmailAndPassword(auth, email.value, password.value)
 
-    router.push('/home')
+    router.push('/choose-role')
   } catch (err) {
     const code = err.code;
 

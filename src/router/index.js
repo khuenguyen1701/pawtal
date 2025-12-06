@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { currentUser, currentUserRole } from "../firebase.js"
 
 import Home from '../components/LandingPage.vue'
 import Login from '../components/Login.vue'
@@ -6,6 +7,7 @@ import SignUp from '../components/SignUp.vue'
 import EventPage from '../components/EventPage.vue'
 import ManagePage from '../components/ManagePage.vue'
 import CreateEvent from '../components/CreateEvent.vue'
+import RoleSelection from '../components/RoleSelection.vue'
 
 const routes = [
   { path: '/', redirect: '/home' },
@@ -21,7 +23,11 @@ const routes = [
     component: SignUp ,
     // meta: {requiresGuest: true}
   },
-
+  {
+  path: '/choose-role',
+  name: 'ChooseRole',
+  component: RoleSelection
+  },
   { path: '/login', 
     name: 'Login', 
     component: Login,
@@ -45,21 +51,41 @@ const routes = [
     name: 'CreateEvent',
     component: CreateEvent,
   }
-  // { path: '/managepage', 
-  //   name: 'ManagePage', 
-  //   component: ManagePage 
-  // },
-  // {
-  //   path: '/events/:id',
-  //   name: 'EventPage',
-  //   component: EventPage,
-  //   props: true,
-  // },
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 })
+
+router.beforeEach((to, from, next) => {
+  const user = currentUser.value
+  const role = currentUserRole.value
+
+  // 1️⃣ Allow ChooseRole to redirect after selecting (prevents redirect block)
+  if (from.name === "ChooseRole") {
+    return next()
+  }
+
+  // 2️⃣ Prevent users who ALREADY HAVE a role from opening ChooseRole again
+  if (role && to.name === "ChooseRole") {
+    return next("/home")
+  }
+
+  // 3️⃣ Force new users (no role yet) to choose a role only ONCE
+  if (user && !role && to.name !== "ChooseRole") {
+    return next("/choose-role")
+  }
+
+  // 4️⃣ Restrict ManagePage to faculty/org roles
+  if (to.name === "ManagePage") {
+    if (!user) return next("/login")
+    if (role !== "faculty") return next("/home")
+  }
+
+  next()
+})
+
+
 
 export default router

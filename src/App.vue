@@ -7,7 +7,7 @@ import Footer from './components/Footer.vue';
 
 const route = useRoute()
 
-const hideOn = ['/login', '/signup']
+const hideOn = ['/login', '/signup', '/choose-role']
 
 const showNavbar = computed(() => !hideOn.includes(route.path))
 </script>
